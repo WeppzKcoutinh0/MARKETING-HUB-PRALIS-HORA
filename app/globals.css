@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-radius: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--brand-bg, #FAFAFA);
+  color: var(--brand-text, #1a1a1a);
+}
+
+body {
+  font-family: var(--font-body, var(--font-montserrat));
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading, var(--font-fraunces));
+}
+
+::selection {
+  background-color: var(--brand-primary, #B8860B);
+  color: #fff;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--brand-border, #ddd); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-primary, #999); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Utilitário de textura sutil de papel kraft para a Pralís */
+.texture-kraft {
+  background-image: radial-gradient(circle at 1px 1px, rgba(94,55,49,0.06) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+/* Padrão de 4 pétalas (símbolo oficial da marca, construído a partir da razão áurea),
+   ecoando o pattern usado nas embalagens reais da Pralís — versão leve em SVG inline,
+   não o arquivo vetorial completo do manual (pesado demais para a web). Uso pontual
+   (hero do dashboard), nunca em tabelas/áreas de leitura de dados. */
+.texture-petals {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%23B8860B' fill-opacity='0.09'%3E%3Cpath d='M24 6 C29 9 31 14 31 20 C25 18 22 13 24 6 Z' transform='rotate(0 24 24)'/%3E%3Cpath d='M24 6 C29 9 31 14 31 20 C25 18 22 13 24 6 Z' transform='rotate(90 24 24)'/%3E%3Cpath d='M24 6 C29 9 31 14 31 20 C25 18 22 13 24 6 Z' transform='rotate(180 24 24)'/%3E%3Cpath d='M24 6 C29 9 31 14 31 20 C25 18 22 13 24 6 Z' transform='rotate(270 24 24)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
+/* Grade diagonal sutil, ecoando o padrão hexagonal usado no manual de marca da Hora Mineira */
+.texture-hora {
+  background-image:
+    repeating-linear-gradient(120deg, rgba(150,153,151,0.06) 0px, rgba(150,153,151,0.06) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(60deg, rgba(150,153,151,0.06) 0px, rgba(150,153,151,0.06) 1px, transparent 1px, transparent 26px);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease both;
+}
