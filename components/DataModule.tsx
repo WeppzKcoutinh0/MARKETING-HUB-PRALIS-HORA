@@ -71,7 +71,8 @@ export default function DataModule({ brandSlug, moduleConfig }: { brandSlug: Bra
   function openCreate() {
     const defaults: Record<string, any> = {};
     for (const f of moduleConfig.fields) {
-      if (f.type === 'boolean') defaults[f.key] = false;
+      if (f.defaultValue !== undefined) defaults[f.key] = f.defaultValue;
+      else if (f.type === 'boolean') defaults[f.key] = false;
     }
     setEditing(null);
     setModalOpen(true);
@@ -133,15 +134,23 @@ export default function DataModule({ brandSlug, moduleConfig }: { brandSlug: Bra
     }
   }
 
+  const isPralis = brandSlug === 'pralis';
+
   return (
     <div className="space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <p className="text-brand-textMuted text-sm">{moduleConfig.description}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          {ModuleIcon && (
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 bg-brand-primary/10">
+              <ModuleIcon size={20} className="text-brand-primary" />
+            </div>
+          )}
+          <p className="text-brand-textMuted text-sm max-w-md">{moduleConfig.description}</p>
         </div>
         <button
           onClick={openCreate}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-brand text-sm font-semibold text-white bg-brand-primary hover:bg-brand-primaryDark transition-colors shrink-0"
+          style={{ boxShadow: '0 8px 18px -6px var(--brand-primary)' }}
         >
           <Plus size={16} /> Novo registro
         </button>
@@ -149,19 +158,19 @@ export default function DataModule({ brandSlug, moduleConfig }: { brandSlug: Bra
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-textMuted" />
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-primary/60" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar..."
-            className="w-full pl-9 pr-3 py-2.5 rounded-brand border border-brand-border bg-brand-surface text-sm text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
+            className="w-full pl-10 pr-3 py-2.5 rounded-brand border border-brand-border bg-brand-surface text-sm text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
           />
         </div>
         {statusField && (
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-brand border border-brand-border bg-brand-surface text-sm text-brand-text"
+            className="px-3 py-2.5 rounded-brand border border-brand-border bg-brand-surface text-sm text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
           >
             <option value="">Todos os status</option>
             {statusField.options?.map((o) => (
@@ -180,26 +189,39 @@ export default function DataModule({ brandSlug, moduleConfig }: { brandSlug: Bra
       {loading ? (
         <div className="p-12 text-center text-brand-textMuted text-sm">Carregando...</div>
       ) : filtered.length === 0 ? (
-        <div className="p-12 text-center flex flex-col items-center gap-2 text-brand-textMuted">
-          <Inbox size={32} />
+        <div className="relative overflow-hidden rounded-brand border border-brand-border bg-brand-surface p-12 text-center flex flex-col items-center gap-3 text-brand-textMuted">
+          {isPralis ? (
+            <svg viewBox="0 0 97.34 139.35" aria-hidden className="w-9 h-auto text-brand-primary/50">
+              <g fill="currentColor" fillRule="evenodd">
+                <path d="M97.34,88.33c-14,2.58-23.62,7.13-32.81,18.19-7.44,8.85-9.84,15.98-11.81,26.92-.87,4.79,1.53,6.27,6.34,5.65,14.66-1.48,25.59-9.96,33.03-18.19,5.69-6.64,10.5-17.33,11.59-26.92.66-5.04-1.75-6.51-6.34-5.65" />
+                <path d="M.23,94.55c2.58,14,7.13,23.62,18.19,32.81,8.85,7.44,15.98,9.84,26.92,11.81,4.79.87,6.27-1.53,5.65-6.34-1.48-14.66-9.96-25.59-18.19-33.03-6.64-5.69-17.33-10.5-26.92-11.59-5.04-.66-6.51,1.75-5.65,6.34" />
+              </g>
+            </svg>
+          ) : (
+            <Inbox size={32} />
+          )}
           <p className="text-sm">Nenhum registro encontrado.</p>
         </div>
       ) : (
-        <div className="rounded-brand border border-brand-border bg-brand-surface overflow-x-auto">
+        <div className="relative overflow-hidden rounded-brand border border-brand-border bg-brand-surface overflow-x-auto">
+          <div
+            className="absolute top-0 left-0 right-0 h-[3px]"
+            style={{ background: 'linear-gradient(90deg, var(--brand-primary), var(--brand-secondary))' }}
+          />
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-brand-border">
+              <tr className="border-b border-brand-border bg-brand-surface2/60">
                 {tableFields.map((f) => (
-                  <th key={f.key} className="text-left px-4 py-3 font-semibold text-brand-textMuted text-xs uppercase tracking-wide whitespace-nowrap">
+                  <th key={f.key} className="text-left px-4 py-3.5 font-semibold text-brand-textMuted text-xs uppercase tracking-wide whitespace-nowrap">
                     {f.label}
                   </th>
                 ))}
-                <th className="px-4 py-3 w-24" />
+                <th className="px-4 py-3.5 w-24" />
               </tr>
             </thead>
             <tbody>
               {filtered.map((row) => (
-                <tr key={row.id} className="border-b border-brand-border last:border-0 hover:bg-brand-surface2/50">
+                <tr key={row.id} className="border-b border-brand-border last:border-0 hover:bg-brand-surface2/50 transition-colors">
                   {tableFields.map((f) => (
                     <td key={f.key} className="px-4 py-3 whitespace-nowrap max-w-xs truncate text-brand-text">
                       {renderCell(f, row[f.key])}
@@ -261,7 +283,8 @@ function buildPayload(moduleConfig: ModuleConfig, values: Record<string, any>) {
   for (const f of moduleConfig.fields) {
     if (f.computed) continue;
     let v = values[f.key];
-    if (f.type === 'number' || f.type === 'currency') v = v === '' || v === undefined ? null : Number(v);
+    // "year" é um select (pra virar dropdown de anos), mas a coluna no banco é integer.
+    if (f.type === 'number' || f.type === 'currency' || f.key === 'year') v = v === '' || v === undefined ? null : Number(v);
     if (v === undefined) v = null;
     payload[f.key] = v;
   }
@@ -279,6 +302,7 @@ function renderCell(field: { key: string; type: string; options?: any[] }, value
       return formatDateBR(value);
     case 'select':
       if (field.key === 'month') return monthLabel(value);
+      if (field.key === 'year') return String(value);
       return <Badge value={value} options={field.options} />;
     case 'boolean':
       return value ? 'Sim' : 'Não';

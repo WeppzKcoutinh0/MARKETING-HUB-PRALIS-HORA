@@ -15,6 +15,11 @@ html, body {
   margin: 0;
   background-color: var(--brand-bg, #FAFAFA);
   color: var(--brand-text, #1a1a1a);
+  /* Rede de segurança contra rolagem horizontal em telas pequenas — qualquer elemento
+     decorativo posicionado fora do fluxo (marca d'água, blur de fundo) que escape do seu
+     container fica cortado aqui em vez de esticar a página inteira. */
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -54,8 +59,8 @@ h1, h2, h3, h4 {
 /* Grade diagonal sutil, ecoando o padrão hexagonal usado no manual de marca da Hora Mineira */
 .texture-hora {
   background-image:
-    repeating-linear-gradient(120deg, rgba(150,153,151,0.06) 0px, rgba(150,153,151,0.06) 1px, transparent 1px, transparent 26px),
-    repeating-linear-gradient(60deg, rgba(150,153,151,0.06) 0px, rgba(150,153,151,0.06) 1px, transparent 1px, transparent 26px);
+    repeating-linear-gradient(120deg, rgba(189,186,174,0.08) 0px, rgba(189,186,174,0.08) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(60deg, rgba(189,186,174,0.08) 0px, rgba(189,186,174,0.08) 1px, transparent 1px, transparent 26px);
 }
 
 @keyframes fadeInUp {

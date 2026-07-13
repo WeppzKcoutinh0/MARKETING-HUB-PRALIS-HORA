@@ -45,7 +45,19 @@ Não há pendência de fonte paga para a Hora (diferente da Pralís).
 
 Wordmark "HORA" com a letra "O" estilizada como círculo com ponto central (relógio) e o "A" formado por garfo + faca cruzados. Subtítulo "Restaurante" em fonte leve abaixo. Existe uma versão mais recente/completa vista no manual: "HORA" (linha 1, escuro) + "MINEIRA" (linha 2, marrom) + badge laranja arredondado "RESTAURANTE" — **essa versão completa com "MINEIRA" e o badge não está presente como arquivo isolado no projeto ainda**, só dentro do PDF do manual. O projeto hoje usa `public/brands/hora/logo.png` (só "HORA" + "Restaurante" em texto pequeno, sem o "MINEIRA").
 
-Ícone à parte (recebido como imagem separada, muito mais refinado): garfo + faca formando os ponteiros de um relógio, com um prato circular como mostrador. **Ainda não salvo no projeto** — pendente do usuário salvar o arquivo (ver `07-proximos-passos.md`).
+Ícone à parte (recebido como imagem separada, muito mais refinado): garfo + faca formando os ponteiros de um relógio, com um prato circular como mostrador. **Salvo em `public/brands/hora/icon.png`** (e o wordmark em `public/brands/hora/logo.png`) — usados em `Topbar`/`Sidebar`/hero do Dashboard.
+
+## Elementos decorativos (paridade com a Pralís, 2026-07-09)
+
+A Hora tinha zero elementos decorativos próprios (cabeçalho da Sidebar, card da landing, hero do Dashboard, marca d'água do card líder, ícone de gráfico vazio) — tudo ficava condicionado a `!isPralis`/`isPralis`, deixando a Hora "nua" nesses pontos. Corrigido pra dar o mesmo nível de acabamento, com a linguagem visual da Hora em vez de reaproveitar a da Pralís:
+
+- **`components/HoraPattern.tsx`** (novo, espelha `BakeryPattern.tsx`): 4 ícones lucide de restaurante (`Clock`, `UtensilsCrossed`, `ChefHat`, `Soup`) ancorados nos cantos do hero do Dashboard, tom `--brand-primary`, baixa opacidade — mesma disciplina de "só nos 4 cantos" da Pralís.
+- **`components/StatCard.tsx`**: o selo em marca d'água do card líder (`highlight`) agora é condicionado por uma nova prop `brand?: BrandSlug` — Pralís usa a pétala oficial (`PRALIS_LEAF`), Hora usa `HORA_MARK`, um traçado simplificado (círculo + garfo + faca + ponto central) do símbolo prato-relógio do manual, feito em `currentColor` pra funcionar em qualquer contexto de cor. Ambos exportados como consts nomeadas.
+- **`components/Sidebar.tsx`**: cabeçalho da Hora ganhou os mesmos dois ícones decorativos que a Pralís (posição/opacidade espelhadas), usando `Clock` + `UtensilsCrossed` em vez de `Wheat` + `Croissant`. A tagline da Hora (sem `fontAccent`) passou a usar a cor secundária (verde) em vez de cinza neutro, pra ter mais presença — igual a Pralís já tinha com a fonte script.
+- **`app/page.tsx`** (landing): card da Hora ganhou os 3 ícones de canto (`Clock`, `UtensilsCrossed`, `Soup`) em branco/creme translúcido, espelhando os 3 da Pralís (`Wheat`, `Croissant`, `Cookie`) em tom de marca.
+- **`components/Dashboard.tsx`**: `emptyIcon` dos gráficos (linha, pizza) e do ranking de conteúdo agora usam `Clock` pra Hora (antes só a Pralís tinha ícone customizado, Hora caía no `BarChart3` genérico). `SectionLabel` ganhou o mesmo prefixo de selo que a Pralís já tinha, usando `HORA_MARK` em miniatura.
+
+Resultado: as duas marcas têm exatamente a mesma quantidade de "assinatura visual" nos mesmos pontos da UI, cada uma com seu próprio vocabulário de ícones/símbolo — nenhuma reaproveita elemento da outra.
 
 ## Decisão de tema: escuro, não claro
 

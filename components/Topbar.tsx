@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import type { BrandTheme } from '@/lib/brands';
 import { MODULES } from '@/lib/modules';
@@ -59,6 +59,16 @@ export default function Topbar({ brand }: { brand: BrandTheme }) {
               </Link>
             );
           })}
+          <button
+            onClick={async () => {
+              await fetch('/api/logout', { method: 'POST' });
+              window.location.href = '/login';
+            }}
+            className="flex items-center gap-2 py-2.5 px-3 rounded-lg text-sm font-medium text-brand-textMuted mt-1"
+          >
+            <LogOut size={15} />
+            Sair
+          </button>
         </nav>
       )}
     </header>

@@ -25,6 +25,7 @@ export interface FieldConfig {
   help?: string;
   colSpan?: 1 | 2;
   section?: string; // agrupa campos visualmente no formulário
+  defaultValue?: string | number | boolean; // pré-preenchido ao criar um registro novo
 }
 
 export interface ModuleConfig {
@@ -114,6 +115,14 @@ export const PRIORIDADES: FieldOption[] = [
   { value: 'urgente', label: 'Urgente', color: '#B14435' },
 ];
 
+// Anos disponíveis pra Análise Mensal: 2 anos antes até 3 anos depois do ano atual —
+// gerado dinamicamente, nunca fica preso a um ano fixo (ex: "2026") no código.
+const CURRENT_YEAR = new Date().getFullYear();
+export const YEAR_OPTIONS: FieldOption[] = Array.from({ length: 6 }, (_, i) => {
+  const y = CURRENT_YEAR - 2 + i;
+  return { value: String(y), label: String(y) };
+});
+
 export const MODULES: Record<string, ModuleConfig> = {
   'trafego-pago': {
     slug: 'trafego-pago',
@@ -154,10 +163,11 @@ export const MODULES: Record<string, ModuleConfig> = {
     title: 'Análise Mensal',
     description: 'Evolução mês a mês de alcance, seguidores e crescimento',
     icon: 'BarChart3',
-    defaultSort: { key: 'month', direction: 'asc' },
+    defaultSort: { key: 'year', direction: 'asc' },
     searchableKeys: ['month', 'notes'],
     primaryLabelKey: 'month',
     fields: [
+      { key: 'year', label: 'Ano', type: 'select', options: YEAR_OPTIONS, required: true, showInTable: true, section: 'Período', defaultValue: String(CURRENT_YEAR) },
       { key: 'month', label: 'Mês', type: 'select', options: [], required: true, showInTable: true, section: 'Período' },
       { key: 'reels_posts_views', label: 'Visualizações reels/posts', type: 'number', showInTable: true, section: 'Alcance e visualizações' },
       { key: 'stories_views_pct', label: '% visualização em stories', type: 'number', section: 'Alcance e visualizações' },

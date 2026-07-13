@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, TrendingUp, BarChart3, Calendar, Handshake,
   Megaphone, CalendarDays, ListChecks, FileText, ArrowLeftRight,
+  Wheat, Croissant, Clock, UtensilsCrossed, LogOut,
 } from 'lucide-react';
 import type { BrandTheme } from '@/lib/brands';
 import { BRANDS } from '@/lib/brands';
@@ -29,11 +30,22 @@ export default function Sidebar({ brand }: { brand: BrandTheme }) {
 
   return (
     <aside className="hidden md:flex md:flex-col w-72 shrink-0 border-r border-brand-border bg-brand-surface min-h-screen sticky top-0">
-      <div className="relative px-6 pt-8 pb-6 border-b border-brand-border overflow-hidden">
+      <div className="relative px-6 pt-9 pb-8 border-b border-brand-border overflow-hidden">
         <div
           className="absolute -top-16 -right-16 w-40 h-40 rounded-full blur-3xl opacity-25 pointer-events-none"
           style={{ backgroundColor: brand.colors.primary }}
         />
+        {isHora ? (
+          <>
+            <Clock size={60} strokeWidth={1.5} className="absolute -bottom-3 -right-3 pointer-events-none" style={{ color: brand.colors.primary, opacity: 0.14, transform: 'rotate(-10deg)' }} />
+            <UtensilsCrossed size={30} strokeWidth={1.5} className="absolute top-4 right-6 pointer-events-none" style={{ color: brand.colors.secondary, opacity: 0.18, transform: 'rotate(10deg)' }} />
+          </>
+        ) : (
+          <>
+            <Wheat size={64} strokeWidth={1.5} className="absolute -bottom-3 -right-3 pointer-events-none" style={{ color: brand.colors.primary, opacity: 0.14, transform: 'rotate(-12deg)' }} />
+            <Croissant size={34} strokeWidth={1.5} className="absolute top-4 right-6 pointer-events-none" style={{ color: brand.colors.secondary, opacity: 0.18, transform: 'rotate(10deg)' }} />
+          </>
+        )}
         <div className="relative">
           {isHora ? (
             <div className="inline-flex rounded-2xl p-4 shadow-card" style={{ backgroundColor: '#FDFDFD' }}>
@@ -42,7 +54,15 @@ export default function Sidebar({ brand }: { brand: BrandTheme }) {
           ) : (
             <Image src={brand.logo} alt={brand.fullName} width={188} height={106} className="object-contain" priority />
           )}
-          <p className="mt-4 text-xs leading-relaxed text-brand-textMuted max-w-[210px]">{brand.tagline}</p>
+          {brand.fontAccent ? (
+            <p className="font-accent text-xl leading-none mt-3 max-w-[210px]" style={{ color: brand.colors.secondary }}>
+              {brand.tagline}
+            </p>
+          ) : (
+            <p className="mt-4 text-xs font-medium leading-relaxed max-w-[210px]" style={{ color: brand.colors.secondary }}>
+              {brand.tagline}
+            </p>
+          )}
         </div>
       </div>
 
@@ -71,7 +91,7 @@ export default function Sidebar({ brand }: { brand: BrandTheme }) {
         })}
       </nav>
 
-      <div className="p-3 border-t border-brand-border">
+      <div className="p-3 border-t border-brand-border space-y-1">
         <Link
           href={`/${otherBrand.slug}`}
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-brand-textMuted hover:bg-brand-surface2 hover:text-brand-text transition-colors group"
@@ -85,7 +105,26 @@ export default function Sidebar({ brand }: { brand: BrandTheme }) {
           <span className="flex-1 min-w-0 truncate">Ir para {otherBrand.name}</span>
           <ArrowLeftRight size={15} className="opacity-0 group-hover:opacity-60 transition-opacity shrink-0" />
         </Link>
+        <LogoutButton />
       </div>
     </aside>
+  );
+}
+
+function LogoutButton() {
+  async function handleLogout() {
+    await fetch('/api/logout', { method: 'POST' });
+    window.location.href = '/login';
+  }
+  return (
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-brand-textMuted hover:bg-brand-danger/10 hover:text-brand-danger transition-colors"
+    >
+      <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0">
+        <LogOut size={15} />
+      </span>
+      <span className="flex-1 min-w-0 text-left truncate">Sair</span>
+    </button>
   );
 }

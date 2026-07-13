@@ -4,18 +4,33 @@ import {
   ResponsiveContainer, LineChart, Line, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell,
 } from 'recharts';
+import { BarChart3 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 const gridColor = 'rgba(150,150,150,0.15)';
+
+function EmptyChartState({ height, icon: Icon = BarChart3 }: { height: number; icon?: LucideIcon }) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-2 text-brand-textMuted" style={{ height }}>
+      <Icon size={26} strokeWidth={1.5} className="text-brand-primary/40" />
+      <p className="text-xs">Ainda sem dados suficientes pra esse gráfico.</p>
+    </div>
+  );
+}
 
 export function TrendLineChart({
   data,
   lines,
   colors,
+  emptyIcon,
 }: {
   data: any[];
   lines: { key: string; label: string }[];
   colors: string[];
+  emptyIcon?: LucideIcon;
 }) {
+  const hasData = data.length > 0 && data.some((d) => lines.some((l) => Number(d[l.key]) > 0));
+  if (!hasData) return <EmptyChartState height={280} icon={emptyIcon} />;
   return (
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={data} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
@@ -39,11 +54,15 @@ export function ComparisonBarChart({
   data,
   bars,
   colors,
+  emptyIcon,
 }: {
   data: any[];
   bars: { key: string; label: string }[];
   colors: string[];
+  emptyIcon?: LucideIcon;
 }) {
+  const hasData = data.length > 0 && data.some((d) => bars.some((b) => Number(d[b.key]) > 0));
+  if (!hasData) return <EmptyChartState height={280} icon={emptyIcon} />;
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
@@ -60,7 +79,17 @@ export function ComparisonBarChart({
   );
 }
 
-export function SimplePieChart({ data, colors }: { data: { label: string; value: number }[]; colors: string[] }) {
+export function SimplePieChart({
+  data,
+  colors,
+  emptyIcon,
+}: {
+  data: { label: string; value: number }[];
+  colors: string[];
+  emptyIcon?: LucideIcon;
+}) {
+  const hasData = data.some((d) => d.value > 0);
+  if (!hasData) return <EmptyChartState height={260} icon={emptyIcon} />;
   return (
     <ResponsiveContainer width="100%" height={260}>
       <PieChart>

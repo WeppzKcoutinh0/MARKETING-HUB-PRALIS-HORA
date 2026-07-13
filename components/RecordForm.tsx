@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import type { FieldConfig, ModuleConfig } from '@/lib/modules';
-import { MONTHS_2026, monthLabel } from '@/lib/format';
+import { MONTHS, monthLabel } from '@/lib/format';
 
 export default function RecordForm({
   moduleConfig,
@@ -102,7 +102,7 @@ function FieldInput({
   const baseClass =
     'w-full rounded-xl border border-brand-border bg-brand-surface2 px-3.5 py-2.5 text-sm text-brand-text placeholder:text-brand-textMuted/60 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary';
 
-  const options = field.key === 'month' ? MONTHS_2026.map((m) => ({ value: m, label: monthLabel(m) })) : field.options;
+  const options = field.key === 'month' ? MONTHS.map((m) => ({ value: m, label: monthLabel(m) })) : field.options;
 
   const label = (
     <label className="block text-xs font-semibold text-brand-textMuted mb-1.5">

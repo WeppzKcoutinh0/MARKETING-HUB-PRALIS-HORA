@@ -37,7 +37,8 @@ export function monthLabel(month: string | null | undefined): string {
   return map[month.toUpperCase()] ?? month;
 }
 
-export const MONTHS_2026 = [
+// Nomes de mês, independentes de ano — o ano é controlado pelo campo "year" de cada registro.
+export const MONTHS = [
   'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
   'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO',
 ];

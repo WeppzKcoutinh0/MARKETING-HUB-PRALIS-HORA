@@ -23,4 +23,4 @@ Documentação viva do Marketing Hub — Pralís & Hora Mineira.
 - **Tomou uma decisão de produto/arquitetura não óbvia (ex: "Hora ficou escura porque..." )?** Registre em `05-decisoes.md` — isso evita repetir a mesma pergunta ou reverter a mesma decisão sem querer no futuro.
 - **Mudou algo do processo de deploy?** Atualize `06-deploy.md`.
 
-Última atualização geral: 2026-07-08.
+Última atualização geral: 2026-07-09.

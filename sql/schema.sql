@@ -56,6 +56,7 @@ create table if not exists paid_traffic (
 create table if not exists monthly_analysis (
   id uuid primary key default gen_random_uuid(),
   brand_id uuid not null references brands(id) on delete cascade,
+  year integer not null default extract(year from now())::integer,
   month text not null,
   reels_posts_views integer default 0,
   stories_views_pct numeric(6,3),
@@ -74,8 +75,31 @@ create table if not exists monthly_analysis (
   next_actions text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  unique (brand_id, month)
+  unique (brand_id, year, month)
 );
+
+-- Migração: bancos criados antes de 2026-07-09 têm monthly_analysis sem a coluna "year"
+-- (só existia "month", o que impedia guardar o mesmo mês em anos diferentes). Este bloco é
+-- seguro de rodar de novo mesmo se a coluna/constraint já existir.
+do $$
+begin
+  if not exists (
+    select 1 from information_schema.columns
+    where table_name = 'monthly_analysis' and column_name = 'year'
+  ) then
+    alter table monthly_analysis add column year integer not null default extract(year from now())::integer;
+  end if;
+end $$;
+
+alter table monthly_analysis drop constraint if exists monthly_analysis_brand_id_month_key;
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'monthly_analysis_brand_id_year_month_key'
+  ) then
+    alter table monthly_analysis add constraint monthly_analysis_brand_id_year_month_key unique (brand_id, year, month);
+  end if;
+end $$;
 
 -- ------------------------------------------------------------
 -- Tabela: posting_schedule (Cronograma de Postagens)

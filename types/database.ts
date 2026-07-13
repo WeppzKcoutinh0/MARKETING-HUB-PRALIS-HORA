@@ -46,6 +46,7 @@ export interface PaidTraffic {
 export interface MonthlyAnalysis {
   id: string;
   brand_id: string;
+  year: number;
   month: string;
   reels_posts_views: number;
   stories_views_pct: number | null;
