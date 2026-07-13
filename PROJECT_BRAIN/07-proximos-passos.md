@@ -4,7 +4,6 @@ Lista viva — remover item daqui quando resolvido, mover decisão relevante pra
 
 ## Pendências ativas
 
-- **Import na Vercel** — código já está no GitHub (ver item concluído abaixo), falta só importar o repositório em vercel.com e cadastrar as variáveis de ambiente lá (as 5 do `.env.local`: Supabase + login). Ver `06-deploy.md` para o passo a passo exato.
 - **Logo completo "HORA MINEIRA"** com a palavra "MINEIRA" e o badge laranja "RESTAURANTE" (visto no manual, página 3) — o projeto hoje só tem a versão sem "MINEIRA" (`public/brands/hora/logo.png`). Perguntar ao usuário se ele tem esse arquivo isolado (PNG/SVG), fora do PDF.
 - **Importação de dados históricos** das planilhas antigas — não há script automático, seria manual pela interface ou um script Node ad-hoc com `xlsx` + `@supabase/supabase-js` (não incluído por padrão). Nota: em 2026-07-09 foram inseridos 3 registros de exemplo (fictícios, não das planilhas reais) em cada um dos 6 módulos de dados da Pralís, só pra visualização da interface — ver item abaixo.
 - **Fontes pagas da Pralís** (MadeType Dillan, TR Freehand 575) — usando substitutas gratuitas (Fraunces, Caveat). Se a marca comprar/ceder os arquivos originais no futuro, trocar para `next/font/local`. Ver `05-decisoes.md`.
@@ -26,3 +25,4 @@ Lista viva — remover item daqui quando resolvido, mover decisão relevante pra
 - ~~Relatórios com filtro por tipo + exportação em PDF~~ — feito em 2026-07-10/11, revisado em 2026-07-11 (bug do PDF cortado por causa de `foreignObjectRendering`, corrigido). Ver `04-arquitetura.md` e `05-decisoes.md`.
 - ~~Revisão de responsividade (mobile/tablet/notebook)~~ — feito em 2026-07-11 nas duas marcas. Ver `05-decisoes.md`.
 - ~~Push para o GitHub~~ — feito em 2026-07-13. Repositório: [github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA](https://github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA), branch `master`. `.env.local` conferido fora do commit antes do push.
+- ~~Deploy na Vercel~~ — feito em 2026-07-13. **No ar**: https://marketing-hub-pralis-hora.vercel.app. Ver `06-deploy.md` pra detalhes (inclui uma pegadinha que rolou: o campo `SESSION_SECRET` foi preenchido errado da primeira vez, com o texto ".env.local" em vez do valor de dentro do arquivo — corrigido antes do deploy final). Todo `git push` na `master` a partir de agora publica automaticamente.

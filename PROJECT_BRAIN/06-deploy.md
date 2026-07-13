@@ -9,7 +9,12 @@
 
 ## Vercel (frontend)
 
-**Ainda não deployado na Vercel**, mas o código já está no GitHub. Passos para o primeiro deploy:
+**Status: no ar.** Primeiro deploy feito em 2026-07-13.
+- URL de produção: **https://marketing-hub-pralis-hora.vercel.app**
+- Conta Vercel: `kaylanecoutinhos-projects` (Hobby), projeto `marketing-hub-pralis-hora`, conectado ao GitHub via `WeppzKcoutinh0`.
+- Toda vez que der `git push` na branch `master`, a Vercel publica automaticamente uma nova versão (sem precisar repetir nenhum passo abaixo).
+
+Passos que foram seguidos no primeiro deploy (referência, caso precise recriar o projeto do zero um dia):
 
 1. ✅ `git init` rodado em **`marketing-hub/`** (2026-07-08) — ou seja, a raiz do repositório Git **é** a raiz do projeto Next.js. Isso é importante: **não configurar "Root Directory" na Vercel**, deixar em branco/padrão. (A pasta `Referencias design pralis/` e outros arquivos soltos na pasta de trabalho `marketing-hub-pralis-hora/`, um nível acima, **não fazem parte** deste repositório — só o conteúdo de `marketing-hub/` está versionado.)
 2. ✅ Repositório remoto criado pelo usuário e conectado: [github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA](https://github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA) (`origin`). Push feito em 2026-07-13 — branch `master`, 2 commits (inicial + o redesign completo/login/relatórios/responsividade). **`.env.local` nunca foi commitado** (confirmado antes do push — só `.env.example` com placeholders está no repositório).
@@ -27,10 +32,11 @@
 - [x] `npm run build` local passa sem erro (verificado em 2026-07-08 — 22 rotas geradas)
 - [x] `npx tsc --noEmit` limpo (verificado em 2026-07-08, e de novo em 2026-07-13 depois do redesign/login/relatórios)
 - [x] Repositório remoto criado no GitHub + `git push` — feito em 2026-07-13 ([github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA](https://github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA), branch `master`)
-- [ ] Projeto importado na Vercel
-- [ ] Variáveis de ambiente cadastradas na Vercel (as mesmas do `.env.local` local — `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `SESSION_SECRET`)
-- [ ] Decidir se RLS permissivo é aceitável para o lançamento inicial ou se autenticação precisa entrar antes (ver nota de segurança acima)
-- [ ] Confirmar domínio (usar o `*.vercel.app` gerado automaticamente, ou domínio próprio?)
+- [x] Projeto importado na Vercel — feito em 2026-07-13
+- [x] Variáveis de ambiente cadastradas na Vercel — feito em 2026-07-13. **Pegadinha que rolou nessa configuração**: no primeiro preenchimento, o campo `SESSION_SECRET` foi preenchido com o texto literal `.env.local` (nome do arquivo) em vez do valor de dentro dele — corrigido antes do deploy final. Se um dia o login em produção parar de funcionar do nada, checar esse campo primeiro.
+- [x] Deploy publicado e confirmado no ar — https://marketing-hub-pralis-hora.vercel.app (2026-07-13)
+- [ ] Decidir se RLS permissivo é aceitável pro uso atual ou se autenticação/RLS precisa evoluir (ver nota de segurança acima)
+- [ ] Domínio próprio (hoje usa o `*.vercel.app` gerado automaticamente)
 
 ## Notas de ambiente Windows/OneDrive (relevante para builds locais antes do deploy)
 
