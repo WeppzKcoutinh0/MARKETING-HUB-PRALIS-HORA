@@ -35,7 +35,10 @@ export function TrendLineChart({
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={data} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
         <CartesianGrid stroke={gridColor} vertical={false} />
-        <XAxis dataKey="label" tick={{ fontSize: 12 }} stroke="currentColor" opacity={0.6} />
+        {/* interval={0} força mostrar os 12 meses sempre — sem isso, o Recharts pula
+            rótulo por rótulo (Jan, Mar, Mai...) quando não acha espaço suficiente, o que
+            acontecia direto no celular. */}
+        <XAxis dataKey="label" tick={{ fontSize: 10 }} interval={0} tickMargin={6} stroke="currentColor" opacity={0.6} />
         <YAxis tick={{ fontSize: 12 }} stroke="currentColor" opacity={0.6} />
         <Tooltip
           contentStyle={{ borderRadius: 12, border: 'none', fontSize: 13 }}
@@ -67,7 +70,7 @@ export function ComparisonBarChart({
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
         <CartesianGrid stroke={gridColor} vertical={false} />
-        <XAxis dataKey="label" tick={{ fontSize: 12 }} stroke="currentColor" opacity={0.6} />
+        <XAxis dataKey="label" tick={{ fontSize: 10 }} interval={0} tickMargin={6} stroke="currentColor" opacity={0.6} />
         <YAxis tick={{ fontSize: 12 }} stroke="currentColor" opacity={0.6} />
         <Tooltip contentStyle={{ borderRadius: 12, border: 'none', fontSize: 13 }} />
         <Legend wrapperStyle={{ fontSize: 12 }} />
