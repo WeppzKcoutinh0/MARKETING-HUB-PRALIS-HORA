@@ -260,7 +260,7 @@ export default function Dashboard({ brand }: { brand: BrandTheme }) {
                 { key: 'Visualizações totais', label: 'Visualizações totais' },
                 { key: 'Seguidores ganhos', label: 'Seguidores ganhos' },
               ]}
-              colors={brand.chartPalette}
+              colors={[brand.colors.primary, brand.colors.success]}
               emptyIcon={isPralis ? Croissant : isHora ? Clock : undefined}
             />
           </ChartCard>

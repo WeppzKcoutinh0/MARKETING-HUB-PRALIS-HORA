@@ -37,7 +37,7 @@ export const BRANDS: Record<BrandSlug, BrandTheme> = {
   pralis: {
     slug: 'pralis',
     name: 'Pralís',
-    fullName: 'Pralís Padaria Artesanal',
+    fullName: 'Padaria Pralís',
     tagline: 'é provar e ser feliz',
     logo: '/brands/pralis/logo-oficial.png',
     icon: '/brands/pralis/icon.svg',

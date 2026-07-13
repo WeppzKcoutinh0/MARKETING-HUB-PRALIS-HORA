@@ -59,7 +59,7 @@ export default function StatCard({
 }) {
   if (wide) {
     return (
-      <div className="relative overflow-hidden rounded-2xl border border-brand-border bg-brand-surface p-5 md:p-6 flex items-center gap-4 sm:col-span-2 lg:col-span-4 shadow-card transition-all duration-200 hover:shadow-cardHover">
+      <div className="relative overflow-hidden rounded-2xl border border-brand-border bg-brand-surface p-5 md:p-6 flex items-center gap-4 col-span-2 lg:col-span-4 shadow-card transition-all duration-200 hover:shadow-cardHover">
         {Icon && (
           <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${BADGE_BG[tone]}`}>
             <Icon size={20} className={ICON_COLOR[tone]} />
@@ -77,7 +77,7 @@ export default function StatCard({
     <div
       className={`relative overflow-hidden rounded-2xl border transition-all duration-200 hover:shadow-cardHover hover:-translate-y-0.5 ${
         highlight
-          ? 'border-transparent text-white shadow-cardHover p-7 md:p-8 sm:col-span-2'
+          ? 'border-transparent text-white shadow-cardHover p-7 md:p-8 col-span-2'
           : 'border-brand-border bg-brand-surface shadow-card p-5'
       }`}
       style={highlight ? { background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark))' } : undefined}

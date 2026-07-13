@@ -1,8 +1,16 @@
 import { getSupabaseClient } from './supabase';
 import type { BrandSlug } from './brands';
 
+// O id de cada marca é fixo (nunca muda durante a sessão) — sem esse cache, toda troca de
+// aba disparava DUAS idas ao banco em sequência (achar o id da marca, só depois buscar os
+// dados de verdade), dobrando a demora percebida em cada clique de navegação.
+const brandIdCache = new Map<BrandSlug, string>();
+
 /** Busca (ou cria, se ainda não existir) o registro da marca na tabela brands e retorna o id */
 export async function getBrandId(slug: BrandSlug): Promise<string> {
+  const cached = brandIdCache.get(slug);
+  if (cached) return cached;
+
   const supabase = getSupabaseClient();
   const { data, error } = await supabase.from('brands').select('id').eq('slug', slug).single();
   if (error || !data) {
@@ -10,6 +18,7 @@ export async function getBrandId(slug: BrandSlug): Promise<string> {
       `Marca "${slug}" não encontrada no Supabase. Rode o script sql/schema.sql (ele já insere as duas marcas).`
     );
   }
+  brandIdCache.set(slug, data.id);
   return data.id;
 }
 
