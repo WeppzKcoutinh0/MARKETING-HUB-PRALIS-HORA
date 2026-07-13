@@ -9,27 +9,26 @@
 
 ## Vercel (frontend)
 
-**Ainda não deployado**, mas o repositório Git já está pronto. Passos para o primeiro deploy:
+**Ainda não deployado na Vercel**, mas o código já está no GitHub. Passos para o primeiro deploy:
 
 1. ✅ `git init` rodado em **`marketing-hub/`** (2026-07-08) — ou seja, a raiz do repositório Git **é** a raiz do projeto Next.js. Isso é importante: **não configurar "Root Directory" na Vercel**, deixar em branco/padrão. (A pasta `Referencias design pralis/` e outros arquivos soltos na pasta de trabalho `marketing-hub-pralis-hora/`, um nível acima, **não fazem parte** deste repositório — só o conteúdo de `marketing-hub/` está versionado.)
-2. ✅ Primeiro commit já criado localmente (`git log` mostra "Commit inicial: Marketing Hub Pralís & Hora Mineira").
-3. **Pendente, requer ação do usuário** (precisa da conta GitHub/Vercel dele): criar um repositório no GitHub e rodar `git remote add origin <url>` + `git push -u origin master`.
-4. Em vercel.com → New Project → importar o repositório recém-criado no GitHub.
-5. Environment Variables (Production + Preview + Development) — copiar do `.env.local`:
+2. ✅ Repositório remoto criado pelo usuário e conectado: [github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA](https://github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA) (`origin`). Push feito em 2026-07-13 — branch `master`, 2 commits (inicial + o redesign completo/login/relatórios/responsividade). **`.env.local` nunca foi commitado** (confirmado antes do push — só `.env.example` com placeholders está no repositório).
+3. Em vercel.com → New Project → importar esse repositório do GitHub.
+4. Environment Variables (Production + Preview + Development) — copiar do `.env.local` local (não do GitHub, já que ele não está lá):
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `SESSION_SECRET` (login único da plataforma — sem essas 3, ninguém consegue passar do `/login` em produção)
-6. Build command / output: detecção automática do Next.js (`next build`), nenhuma configuração extra necessária — sem `vercel.json` customizado.
-7. Deploy. Depois do primeiro deploy, todo `git push` na branch principal publica automaticamente.
+5. Build command / output: detecção automática do Next.js (`next build`), nenhuma configuração extra necessária — sem `vercel.json` customizado.
+6. Deploy. Depois do primeiro deploy, todo `git push` na branch principal publica automaticamente.
 
 ## Checklist pré-deploy
 
 - [x] Repositório Git criado e primeiro commit feito (2026-07-08, local — `git log` tem 1 commit)
 - [x] `npm run build` local passa sem erro (verificado em 2026-07-08 — 22 rotas geradas)
-- [x] `npx tsc --noEmit` limpo (verificado em 2026-07-08)
-- [ ] Repositório remoto criado no GitHub + `git push` (precisa da conta do usuário)
+- [x] `npx tsc --noEmit` limpo (verificado em 2026-07-08, e de novo em 2026-07-13 depois do redesign/login/relatórios)
+- [x] Repositório remoto criado no GitHub + `git push` — feito em 2026-07-13 ([github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA](https://github.com/WeppzKcoutinh0/MARKETING-HUB-PRALIS-HORA), branch `master`)
 - [ ] Projeto importado na Vercel
-- [ ] Variáveis de ambiente cadastradas na Vercel (as mesmas do `.env.local`)
+- [ ] Variáveis de ambiente cadastradas na Vercel (as mesmas do `.env.local` local — `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `SESSION_SECRET`)
 - [ ] Decidir se RLS permissivo é aceitável para o lançamento inicial ou se autenticação precisa entrar antes (ver nota de segurança acima)
 - [ ] Confirmar domínio (usar o `*.vercel.app` gerado automaticamente, ou domínio próprio?)
 
